@@ -4,11 +4,78 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import plotly.express as px
 
+df=pd.read_csv('dataset.csv')
+df2=pd.read_csv('dataset.csv')
+
+# Sample code for mapping
+df["SEX"] = pd.to_numeric(df["SEX"])
+df["SEX"] = df["SEX"].map({1:"FEMALE", 2:"MALE", 99:"UNKNOWN"})
+# HOSPITALIZED
+df["HOSPITALIZED"] = pd.to_numeric(df["HOSPITALIZED"])
+df["HOSPITALIZED"] = df["HOSPITALIZED"].map({1:"NO", 2:"YES", 99:"UNKNOWN"})
+#intubated
+df["INTUBATED"] = pd.to_numeric(df["INTUBATED"])
+df["INTUBATED"] = df["INTUBATED"].map({1:"YES", 2:"NO", 97:"DOES NOT APPLY",98:"IGNORED",99:"UNKNOWN"})
+#PNEUMONIA
+df["PNEUMONIA"] = pd.to_numeric(df["PNEUMONIA"])
+df["PNEUMONIA"] = df["PNEUMONIA"].map({1:"YES", 2:"NO", 97:"DOES NOT APPLY",98:"IGNORED",99:"UNKNOWN"})
+#PREGNANCY
+df["PREGNANCY"] = pd.to_numeric(df["PREGNANCY"])
+df["PREGNANCY"] = df["PREGNANCY"].map({1:"YES", 2:"NO", 97:"DOES NOT APPLY",98:"IGNORED",99:"UNKNOWN"})
+#SPEAKS_NATIVE_LANGUAGE
+df["SPEAKS_NATIVE_LANGUAGE"] = pd.to_numeric(df["SPEAKS_NATIVE_LANGUAGE"])
+df["SPEAKS_NATIVE_LANGUAGE"] = df["SPEAKS_NATIVE_LANGUAGE"].map({1:"YES", 2:"NO", 97:"DOES NOT APPLY",98:"IGNORED",99:"UNKNOWN"})
+#DIABETES
+df["DIABETES"] = pd.to_numeric(df["DIABETES"])
+df["DIABETES"] = df["DIABETES"].map({1:"YES", 2:"NO", 97:"DOES NOT APPLY",98:"IGNORED",99:"UNKNOWN"})
+#COPD
+df["COPD"] = pd.to_numeric(df["COPD"])
+df["COPD"] = df["COPD"].map({1:"YES", 2:"NO", 97:"DOES NOT APPLY",98:"IGNORED",99:"UNKNOWN"})
+#ASTHMA
+df["ASTHMA"] = pd.to_numeric(df["ASTHMA"])
+df["ASTHMA"] = df["SEX"].map({1:"YES", 2:"NO", 97:"DOES NOT APPLY",98:"IGNORED",99:"UNKNOWN"})
+#INMUSUPR
+df["INMUSUPR"] = pd.to_numeric(df["INMUSUPR"])
+df["INMUSUPR"] = df["INMUSUPR"].map({1:"YES", 2:"NO", 97:"DOES NOT APPLY",98:"IGNORED",99:"UNKNOWN"})
+#HYPERTENSION
+df["HYPERTENSION"] = pd.to_numeric(df["HYPERTENSION"])
+df["HYPERTENSION"] = df["HYPERTENSION"].map({1:"YES", 2:"NO", 97:"DOES NOT APPLY",98:"IGNORED",99:"UNKNOWN"})
+#OTHER_DISEASE
+df["OTHER_DISEASE"] = pd.to_numeric(df["OTHER_DISEASE"])
+df["OTHER_DISEASE"] = df["OTHER_DISEASE"].map({1:"YES", 2:"NO", 97:"DOES NOT APPLY",98:"IGNORED",99:"UNKNOWN"})
+#CARDIOVASCULAR
+df["CARDIOVASCULAR"] = pd.to_numeric(df["CARDIOVASCULAR"])
+df["CARDIOVASCULAR"] = df["CARDIOVASCULAR"].map({1:"YES", 2:"NO", 97:"DOES NOT APPLY",98:"IGNORED",99:"UNKNOWN"})
+#OBESITY
+df["OBESITY"] = pd.to_numeric(df["OBESITY"])
+df["OBESITY"] = df["OBESITY"].map({1:"YES", 2:"NO", 97:"DOES NOT APPLY",98:"IGNORED",99:"UNKNOWN"})
+#CHRONIC_KIDNEY
+df["CHRONIC_KIDNEY"] = pd.to_numeric(df["CHRONIC_KIDNEY"])
+df["CHRONIC_KIDNEY"] = df["CHRONIC_KIDNEY"].map({1:"YES", 2:"NO", 97:"DOES NOT APPLY",98:"IGNORED",99:"UNKNOWN"})
+#TOBACCO
+df["TOBACCO"] = pd.to_numeric(df["TOBACCO"])
+df["TOBACCO"] = df["TOBACCO"].map({1:"YES", 2:"NO", 97:"DOES NOT APPLY",98:"IGNORED",99:"UNKNOWN"})
+#ANOTHER CASE
+df["ANOTHER CASE"] = pd.to_numeric(df["ANOTHER CASE"])
+df["ANOTHER CASE"] = df["ANOTHER CASE"].map({1:"YES", 2:"NO", 97:"DOES NOT APPLY",98:"IGNORED",99:"UNKNOWN"})
+#MIGRANT
+df["MIGRANT"] = pd.to_numeric(df["MIGRANT"])
+df["MIGRANT"] = df["MIGRANT"].map({1:"YES", 2:"NO", 97:"DOES NOT APPLY",98:"IGNORED",99:"UNKNOWN"})
+#ICU
+df["ICU"] = pd.to_numeric(df["ICU"])
+df["ICU"] = df["ICU"].map({1:"YES", 2:"NO", 97:"DOES NOT APPLY",98:"IGNORED",99:"UNKNOWN"})
+#OUTCOME
+df["OUTCOME"] = pd.to_numeric(df["OUTCOME"])
+df["OUTCOME"] = df["OUTCOME"].map({1:"POSITIVE", 2:"NEGATIVE", 3:"PENDING"})
+#NATIONALITY
+df["NATIONALITY"] = pd.to_numeric(df["NATIONALITY"])
+df["NATIONALITY"] = df["NATIONALITY"].map({1:"MEXICAN", 2:"FOREIGN", 3:"UNKNOWN"})
+
+analysis = df.copy()
+
+
 tab1, tab2, tab3, tab4, tab5 = st.tabs(["Barchart", "Dual-Barchart", "Distribution","Heatmap", "Hue Barchart"])
 with tab1:
-    df = pd.read_csv("output.csv")  
-    # Copy dataset
-    analysis = df.copy()
     # Define age bins
     bins = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
     analysis['AGE_GROUP'] = pd.cut(df['AGE'], bins=bins, labels=bins[:-1], right=False)
@@ -41,10 +108,6 @@ with tab1:
     # Display the Plotly chart in Streamlit
     st.plotly_chart(fig, use_container_width=True)
 with tab2:
-    @st.cache_data
-    def load_data():
-        return pd.read_csv("output.csv")
-    analysis = load_data()
     # Define age bins
     bins = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
     analysis['AGE_GROUP'] = pd.cut(analysis['AGE'], bins=bins, labels=bins[:-1], right=False)
@@ -81,12 +144,6 @@ with tab2:
     # Show chart
     st.plotly_chart(fig, use_container_width=True)
 with tab3:
-    @st.cache_data
-    def load_data():
-        return pd.read_csv("output.csv")
-    analysis = load_data()
-    st.title("Intubation Status")
-
     # Count intubation status
     intubation_counts = analysis["INTUBATED"].value_counts().reset_index()
     intubation_counts.columns = ["Intubation Status", "Count"]
@@ -103,10 +160,6 @@ with tab3:
     # Display chart
     st.plotly_chart(fig, use_container_width=True)
 with tab4:
-    @st.cache_data
-    def load_data():
-        return pd.read_csv("dataset.csv")
-    df2 = load_data()
     #Compute correlation
     correlation = df2[["ICU", "DIABETES", "COPD", "ASTHMA", "INMUSUPR", "HYPERTENSION", 
                    "CARDIOVASCULAR", "OBESITY", "CHRONIC_KIDNEY","TOBACCO"]].corr()
@@ -126,10 +179,6 @@ with tab4:
     st.title("Correlation Other Diseases With ICU Admission")
     st.plotly_chart(fig, use_container_width=True)
 with tab5:
-    @st.cache_data
-    def load_data():
-        return pd.read_csv("dataset.csv")
-    df2 = load_data()
     df2['DATE_OF_DEATH'] = pd.to_datetime(df2['DATE_OF_DEATH'])
 
     # Define disease columns
