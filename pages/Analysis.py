@@ -41,6 +41,10 @@ with tab1:
     # Display the Plotly chart in Streamlit
     st.plotly_chart(fig, use_container_width=True)
 with tab2:
+    @st.cache_data
+    def load_data():
+        return pd.read_csv("output.csv")
+    analysis = load_data()
     # Define age bins
     bins = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
     analysis['AGE_GROUP'] = pd.cut(analysis['AGE'], bins=bins, labels=bins[:-1], right=False)
@@ -77,6 +81,10 @@ with tab2:
     # Show chart
     st.plotly_chart(fig, use_container_width=True)
 with tab3:
+    @st.cache_data
+    def load_data():
+        return pd.read_csv("output.csv")
+    analysis = load_data()
     st.title("Intubation Status")
 
     # Count intubation status
@@ -95,7 +103,10 @@ with tab3:
     # Display chart
     st.plotly_chart(fig, use_container_width=True)
 with tab4:
-    df2 = pd.read_csv('dataset.csv')
+    @st.cache_data
+    def load_data():
+        return pd.read_csv("dataset.csv")
+    df2 = load_data()
     #Compute correlation
     correlation = df2[["ICU", "DIABETES", "COPD", "ASTHMA", "INMUSUPR", "HYPERTENSION", 
                    "CARDIOVASCULAR", "OBESITY", "CHRONIC_KIDNEY","TOBACCO"]].corr()
@@ -115,6 +126,10 @@ with tab4:
     st.title("Correlation Other Diseases With ICU Admission")
     st.plotly_chart(fig, use_container_width=True)
 with tab5:
+    @st.cache_data
+    def load_data():
+        return pd.read_csv("dataset.csv")
+    df2 = load_data()
     df2['DATE_OF_DEATH'] = pd.to_datetime(df2['DATE_OF_DEATH'])
 
     # Define disease columns
